@@ -1,0 +1,69 @@
+// Prisma schema completo
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  password  String
+  role      String     
+  posts     Post[]     @relation("UserPosts")
+  comments  Comment[]  @relation("UserComments")
+  ups       Up[]       @relation("UserUps")
+  downs     Down[]     @relation("UserDowns")
+}
+
+model Post {
+  id         Int        @id @default(autoincrement())
+  title      String
+  content    String
+  createdAt  DateTime   @default(now())
+  upsCount   Int        @default(0)
+  downsCount Int        @default(0)
+  authorId   Int
+  author     User       @relation("UserPosts", fields: [authorId], references: [id])
+  comments   Comment[]  @relation("PostComments")
+  ups        Up[]       @relation("PostUps")
+  downs      Down[]     @relation("PostDowns")
+}
+
+model Comment {
+  id         Int       @id @default(autoincrement())
+  content    String
+  createdAt  DateTime  @default(now())
+  postId     Int
+  userId     Int
+  post       Post      @relation("PostComments", fields: [postId], references: [id])
+  user       User      @relation("UserComments", fields: [userId], references: [id])
+}
+
+model Up {
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  postId   Int
+  user     User    @relation("UserUps", fields: [userId], references: [id])
+  post     Post    @relation("PostUps", fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId]) 
+}
+
+model Down {
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  postId   Int
+  user     User    @relation("UserDowns", fields: [userId], references: [id])
+  post     Post    @relation("PostDowns", fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId]) 
+}
