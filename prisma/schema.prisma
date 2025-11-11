@@ -2,7 +2,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../prisma/generated/prisma"
 }
 
 datasource db {
@@ -54,7 +54,7 @@ model Up {
   post     Post    @relation("PostUps", fields: [postId], references: [id])
   createdAt DateTime @default(now())
 
-  @@unique([userId, postId]) 
+  @@unique([userId, postId]) // Impede que o mesmo usuário dê "up" duas vezes no mesmo post
 }
 
 model Down {
@@ -65,5 +65,5 @@ model Down {
   post     Post    @relation("PostDowns", fields: [postId], references: [id])
   createdAt DateTime @default(now())
 
-  @@unique([userId, postId]) 
+  @@unique([userId, postId]) // Impede que o mesmo usuário dê "down" duas vezes no mesmo post
 }

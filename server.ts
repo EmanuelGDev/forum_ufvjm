@@ -1,4 +1,5 @@
-import fastify, { FastifyError } from 'fastify';  
+import fastify from 'fastify';
+import type { FastifyError } from 'fastify';  
 import cors from '@fastify/cors'
 import dotenv from 'dotenv';
 
