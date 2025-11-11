@@ -20,6 +20,16 @@ class UserController{
         }
     }
 
+    async getUser(request : FastifyRequest, reply : FastifyReply){
+        try{
+            const {id} = request.params as {id : string}
+            const user = await this.service.getUser(id)
+            return reply.code(200).send(user)
+        }catch(err){
+            return reply.code(400).send(err)
+        }
+    }
+
 }
 
 export {UserController}

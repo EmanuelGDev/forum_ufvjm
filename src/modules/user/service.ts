@@ -31,6 +31,18 @@ class UserService{
         return user
     }
 
+    async getUser(id : string){
+        if(!id){
+            throw new Error("Can't find user")
+        }
+        const user = await prisma.user.findFirst({
+            where:{
+                id: Number(id)
+            }
+        })
+
+        return user
+    }
 }
 
 export  {UserService}
