@@ -25,6 +25,7 @@ model Post {
   id         Int        @id @default(autoincrement())
   title      String
   content    String
+  status String  @default("New")
   createdAt  DateTime   @default(now())
   upsCount   Int        @default(0)
   downsCount Int        @default(0)
