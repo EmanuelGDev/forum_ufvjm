@@ -1,4 +1,5 @@
 import {prisma} from "../../lib/prisma"
+import bcrypt from 'bcrypt'
 
 class UserService{
 
@@ -18,12 +19,13 @@ class UserService{
         if(existsUser){
             throw new Error("Email already in use")
         }
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         const user = await prisma.user.create({
             data:{
                 name : name,
                 email : email,
-                password : password,
+                password : hashedPassword,
                 role : role
             }
         })
