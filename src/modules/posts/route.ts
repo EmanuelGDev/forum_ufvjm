@@ -2,10 +2,12 @@ import type { FastifyInstance, FastifyRequest, FastifyReply } from "../../../nod
 import authenticate from "../../lib/jwt"
 import { PostCrontroller } from "./controller"
 
+const postCrontroller = new PostCrontroller()
+
 async function postRoutes(fastify : FastifyInstance){
 
-    fastify.post('/create', { preHandler: [authenticate] }, (request : FastifyRequest, reply : FastifyReply) =>
-        PostCrontroller.createPost(request,reply))
+    fastify.post('/create', (request : FastifyRequest, reply : FastifyReply) =>
+        postCrontroller.createPost(request,reply))
 
 }
 

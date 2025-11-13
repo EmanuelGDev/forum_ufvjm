@@ -25,11 +25,11 @@ model Post {
   id         Int        @id @default(autoincrement())
   title      String
   content    String
+  authorId   Int
   status String  @default("New")
   createdAt  DateTime   @default(now())
   upsCount   Int        @default(0)
   downsCount Int        @default(0)
-  authorId   Int
   author     User       @relation("UserPosts", fields: [authorId], references: [id])
   comments   Comment[]  @relation("PostComments")
   ups        Up[]       @relation("PostUps")

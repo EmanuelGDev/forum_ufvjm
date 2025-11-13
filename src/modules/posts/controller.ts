@@ -12,8 +12,9 @@ class PostCrontroller{
 
     async createPost(request: FastifyRequest, reply : FastifyReply){
         try{
-            const {title, content} = request.body as {title : string, content : String}
-            const post = await this.service.createPost(title, content)
+            const {title, content, userId} = request.body as {title : string, content : string, userId : number}
+            const post = await this.service.createPost(title, content, userId)
+            return reply.code(200).send(post)
         }catch(err){
             reply.code(400).send(err)
         }
