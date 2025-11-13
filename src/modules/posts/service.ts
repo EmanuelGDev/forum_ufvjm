@@ -17,5 +17,9 @@ class PostService{
         return post
     }
 
+    async getPosts(){
+        const posts = await prisma.post.findMany()
+    }
+
 }
 export {PostService}

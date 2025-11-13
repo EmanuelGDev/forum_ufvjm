@@ -9,6 +9,8 @@ async function postRoutes(fastify : FastifyInstance){
     fastify.post('/create', (request : FastifyRequest, reply : FastifyReply) =>
         postCrontroller.createPost(request,reply))
 
+    fastify.get('/', (request : FastifyRequest, reply : FastifyReply) =>
+    postCrontroller.getPosts(request,reply))
 }
 
 export {postRoutes}

@@ -20,5 +20,13 @@ class PostCrontroller{
         }
     }
 
+    async getPosts(request : FastifyRequest, reply : FastifyReply){
+        try{
+            const posts = await this.service.getPosts()
+            return posts
+        }catch(err){
+            reply.code(400).send(err)
+        }
+    }
 }
 export {PostCrontroller}
